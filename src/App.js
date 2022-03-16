@@ -1,3 +1,4 @@
+// collect all the music you listened to while building your portfolio
 import {useState, useEffect} from "react"
 import firebase from "./firebase"
 
@@ -33,24 +34,38 @@ function App() {
   
   return (
     <div className="App">
-      <h1>elon vs putin</h1>
-      <p>Total click: ...</p>
+      <header className="header">
+        <h1>elon vs putin</h1>
+      </header>
+      <div className="total-clicks"> 
+         <p>Total clicks: {elon.length + putin.length} </p>
+      </div>
       <div className="container">
         <div className="box">
-          <p>elon {elon.length} clicks</p>
-          <p>percent %</p>
-          <img src="" />
-          <p>total clicks: </p>
-          <button>see more about elon</button>
-          <button onClick={() => vote("elon")}>vote for elon</button>
+          <div className="statics-container">
+            <p>elon: {elon.length} clicks</p>
+            <p>{((elon.length / (putin.length + elon.length)) * 100).toFixed(2)} % chance of winning</p>
+          </div>
+            <div className="img-container">
+            <img className="elon-img" src="https://i.suar.me/ZpMNw/l" />
+          </div>
+          <div className="add-container">
+            <button>elon's profile</button>
+            <button onClick={() => vote("elon")}>vote for elon</button>
+          </div>
         </div>
         <div className="box">
-          <p>putin {putin.length} clicks</p>
-          <p>percent %</p>
-          <img src="" />
-          <p>total clicks: </p>
-          <button>see more about putin</button>
-          <button onClick={() => vote("putin")}>vote for putin</button>
+          <div className="statics-container">
+            <p>putin: {putin.length} clicks</p>
+            <p>{((putin.length / (putin.length + elon.length)) * 100).toFixed(2)} % chance of winning</p>
+          </div>
+            <div className="img-container">
+            <img className="putin-img" src="https://i.suar.me/yXVoq/l" />
+          </div>
+          <div className="add-container">
+            <button>putin's profile</button>
+            <button onClick={() => vote("putin")}>vote for putin</button>
+          </div>
         </div>
       </div>
     </div>
