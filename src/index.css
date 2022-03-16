@@ -1,1 +1,7 @@
+.container {
+    display:flex;
+}
 
+.box {
+    margin:10px;
+}
