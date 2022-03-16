@@ -1,14 +1,27 @@
 // collect all the music you listened to while building your portfolio
 import {useState, useEffect} from "react"
 import firebase from "./firebase"
-
+import Modal from "react-awesome-modal"
+import axios from "axios"
 function App() {
-  function vote(forWho) {
-    firebase.database().ref(forWho).push({
-      number:"+1"
-    })
+  const [country, setCountry] = useState('')
+  const getData = async () => {
+  const res = await axios.get('https://geolocation-db.com/json/')
+  setCountry(res.data.country_name)
   }
 
+  useEffect( () => {
+    getData()
+  }, [])
+
+  function vote(forWho) {
+    firebase.database().ref(forWho).push({
+      number:"+1",
+      country:country
+    })
+  }
+  const [visible1, setVisible1] = useState(false)
+  const [visible2, setVisible2] = useState(false)
   const [elon, setElon] = useState("")
   const [putin, setPutin] = useState("")
   useEffect(() => {
@@ -50,9 +63,28 @@ function App() {
             <img className="elon-img" src="https://i.suar.me/ZpMNw/l" />
           </div>
           <div className="add-container">
-            <button>elon's profile</button>
+            <button onClick={() => setVisible1(true)}>elon's profile</button>
             <button onClick={() => vote("elon")}>vote for elon</button>
           </div>
+          <Modal visible={visible1} width="400" height="300" effect="fadeInDown" onClickAway={() => setVisible1(false)}>
+              <div className="modal">
+                  figher name: elon
+                  <br />
+                  Age: 50
+                  <br/>
+                  Weight: 180lbs
+                  <br/>
+                  Height: 6'2''
+                  <br />
+                  Notable Traits: 
+                  <br />
+                  Fought a 350lb Sumo wrestler
+                  <br />
+                  weapons experience: 
+                  <br />
+                  sword / flamethrower
+              </div>
+          </Modal>
         </div>
         <div className="box">
           <div className="statics-container">
@@ -63,9 +95,30 @@ function App() {
             <img className="putin-img" src="https://i.suar.me/yXVoq/l" />
           </div>
           <div className="add-container">
-            <button>putin's profile</button>
+            <button onClick={() => setVisible2(true)}>putin's profile</button>
             <button onClick={() => vote("putin")}>vote for putin</button>
           </div>
+          <Modal visible={visible2} width="400" height="300" effect="fadeInDown" onClickAway={() => setVisible2(false)}>
+              <div className="modal">
+                  figher name: putin
+                  <br />
+                  Age: 69
+                  <br/>
+                  Weight: 159lbs
+                  <br/>
+                  Height: 5'6''
+                  <br />
+                  Notable Traits: 
+                  <br />
+                  KGB Agent / takewondo black belt
+                  <br />
+                  weapons experience: 
+                  <br />
+                  Firearms
+                  <br />
+                  + he can bring his bear
+              </div>
+          </Modal>
         </div>
       </div>
     </div>
